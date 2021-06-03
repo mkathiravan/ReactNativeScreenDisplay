@@ -1,21 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import {createStore } from 'redux';
+
+import { Provider } from 'react-redux'
+
+import HomeScreen from "./screens/HomeScreen"
+
+import AppNavigator from './Nav.js'
+
+import BottomTab from './Nav'
+
+
+const reducer = (state = {menu: "closeMenu"}, action) => {
+
+  // if(action.type == "OPENMENU")
+  // {
+  //   return {menu : "openMenu"};
+  // }
+  // else if(action.type == "CLOSEMENU")
+  // {
+  //   return {menu: "closeMenu"};
+  // }
+
+   switch(action.type)
+   {
+     case "OPENMENU":
+       return {menu : "openMenu"};
+
+     case "CLOSEMENU":
+       return {menu: "closeMenu"};
+      
+      default:
+        return state;
+   }
+
+ 
+
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const database = createStore(reducer);
+
+const App = () => (
+
+  <Provider store = {database} >
+
+      <AppNavigator/>
+ 
+   </Provider>
+)
+
+export default App;
